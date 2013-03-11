@@ -4,4 +4,4 @@
 # If you change this key, all old signed cookies will become invalid!
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-Scanhandler::Application.config.secret_token = '955027aec8d94885ca60cb8db2e65565d75618e34ef4103ae2a83bf1364cc3227e89ed5a156d66f6cdb479277f198b64b8a34f0508d38730ea64f9e24330c1c4'
+Scanhandler::Application.config.secret_token = '3cb1ffc75ea9da27b16511bc6f0e520bacbd85ae242ec913bfff46cf41b9b774fcaa3612873d24894efe1f9b4c64e6d965422d9ebb7ef4f8b8317df68d4ab112'
