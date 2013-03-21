@@ -1,3 +1,0 @@
-test:
-  adapter: sqlite3
-  database: test/no_fuzz_test.sqlite3
