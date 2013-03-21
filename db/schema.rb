@@ -11,11 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130317160824) do
+ActiveRecord::Schema.define(:version => 20130319135406) do
 
   create_table "name_groups", :force => true do |t|
     t.string "names"
   end
+
+  create_table "nickname_trigrams", :force => true do |t|
+    t.string  "tg"
+    t.integer "nickname_id"
+    t.integer "score",       :default => 1
+  end
+
+  add_index "nickname_trigrams", ["nickname_id"], :name => "index_nickname_trigrams_on_nickname_id"
 
   create_table "nicknames", :force => true do |t|
     t.string  "name"
@@ -23,6 +31,34 @@ ActiveRecord::Schema.define(:version => 20130317160824) do
   end
 
   add_index "nicknames", ["name_group_id"], :name => "index_nicknames_on_name_group_id"
+
+  create_table "people", :force => true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "people", ["user_id"], :name => "index_people_on_user_id"
+
+  create_table "people_first_name_trigrams", :force => true do |t|
+    t.integer "person_id",                :null => false
+    t.string  "tg",                       :null => false
+    t.integer "score",     :default => 1, :null => false
+  end
+
+  add_index "people_first_name_trigrams", ["person_id"], :name => "index_people_first_name_trigrams_on_person_id"
+  add_index "people_first_name_trigrams", ["tg"], :name => "index_people_first_name_trigrams_on_tg"
+
+  create_table "people_last_name_trigrams", :force => true do |t|
+    t.integer "person_id",                :null => false
+    t.string  "tg",                       :null => false
+    t.integer "score",     :default => 1, :null => false
+  end
+
+  add_index "people_last_name_trigrams", ["person_id"], :name => "index_people_last_name_trigrams_on_person_id"
+  add_index "people_last_name_trigrams", ["tg"], :name => "index_people_last_name_trigrams_on_tg"
 
   create_table "roles", :force => true do |t|
     t.string   "name"

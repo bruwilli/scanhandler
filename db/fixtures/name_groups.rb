@@ -699,5 +699,5 @@ NameGroup.seed(:id,
 { id: 698, names: 'yulan,lan,yul' },
 { id: 699, names: 'yvonne,vonna' },
 { id: 700, names: 'zachariah,zach,zacharias,zachary,zeke' },
-{ id: 701, names: 'zedediah,zed' },
+{ id: 701, names: 'zedediah,zed' }
 )

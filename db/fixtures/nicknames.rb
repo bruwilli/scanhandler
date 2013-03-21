@@ -2380,5 +2380,5 @@ Nickname.seed(:id,
 { id: 2379, name: 'zachary', name_group_id: 700 },
 { id: 2380, name: 'zeke', name_group_id: 700 },
 { id: 2381, name: 'zedediah', name_group_id: 701 },
-{ id: 2382, name: 'zed', name_group_id: 701 },
+{ id: 2382, name: 'zed', name_group_id: 701 }
 )
