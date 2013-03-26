@@ -25,3 +25,5 @@ gem "better_errors", ">= 0.6.0", :group => :development
 gem "binding_of_caller", ">= 0.7.1", :group => :development, :platforms => [:mri_19, :rbx]
 gem "seed-fu", '>= 2.1.0', :group => [:development, :production]
 gem "rmagick", ">=2.13.0", :group => [:development, :production]
+gem "faker", ">=1.1.2", :group => [:development, :test]
+gem "populate", ">=0.0.2", :group => [:development, :test]
