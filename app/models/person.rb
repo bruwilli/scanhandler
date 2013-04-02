@@ -3,6 +3,8 @@ class Person < ActiveRecord::Base
   has_many :people_last_name_trigrams, :dependent => :destroy
   has_one :user # user that created this person
   attr_accessible :first_name, :last_name
+  validates :first_name, presence: true, length: { maximum: 64 }
+  validates :last_name, presence: true, length: { maximum: 64 }
 
   after_save :handle_saved
 
