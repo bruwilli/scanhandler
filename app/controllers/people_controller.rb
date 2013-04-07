@@ -3,10 +3,15 @@ class PeopleController < ApplicationController
 
   def index
     authorize! :index, @user, :message => 'Not authorized to view person information.'
+  end
+
+  def search
+    authorize! :index, @user, :message => 'Not authorized to view person information.'
     @people = Person.search(params[:first_name], 
                             params[:last_name],
                             params[:fuzzy],
                             params[:nicknames])
+    render partial: 'people/search'
   end
 
   def new
