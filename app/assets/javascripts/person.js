@@ -20,7 +20,7 @@ var do_search = function() {
                     last_search_xhr = undefined;
                     $("#person-search-results").html(html); // replace the "results" div with the results
                 }).fail(function() {});
-            }, 300);
+            }, 250);
     }
 };
 
@@ -28,4 +28,8 @@ $(document).ready(function() {
     $("#first_name,#last_name").bind("keyup", function() {
       do_search();
     }); 
+    $("#fuzzy,#nicknames").change(function() {
+      do_search();
+    }); 
+    do_search();
 });

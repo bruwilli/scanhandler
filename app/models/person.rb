@@ -9,6 +9,10 @@ class Person < ActiveRecord::Base
   after_save :handle_saved
 
   def self.search(first_name , last_name, is_fuzzy = false, include_nicknames = false)
+    if last_name.nil? and first_name.nil?
+      return order(:last_name)
+    end
+
     # handle fastest search with a special case
     if not is_fuzzy and not include_nicknames
       if not first_name.nil?
@@ -22,12 +26,8 @@ class Person < ActiveRecord::Base
           return where("first_name like :search", {search: first_name + '%'} ).order("length(first_name)")
         end
       else 
-        if not last_name.nil?
-          last_name.downcase!
-          return where("last_name like :search", {search: last_name + '%'} ).order("length(last_name)")
-        else
-          return []
-        end
+        last_name.downcase!
+        return where("last_name like :search", {search: last_name + '%'} ).order("length(last_name)")
       end
     end
 
@@ -43,8 +43,6 @@ class Person < ActiveRecord::Base
       if is_fuzzy
         people_by_last_name |= get_fuzzy_last_name_matches(last_name)
       end
-    else
-      return [] if first_name.nil?
     end
 
     if not first_name.nil?
@@ -70,7 +68,7 @@ class Person < ActiveRecord::Base
         end
 
         first_names_from_nicknames.each do |first_name_from_nicknames|
-          people_by_first_name_with_nicknames |= where("first_name like :search", {search: first_name_from_nicknames + '%'} ).order("length(first_name)")
+          people_by_first_name_with_nicknames |= find_all_by_first_name(first_name_from_nicknames)
           if is_fuzzy
             people_by_first_name_with_nicknames_fuzzy |= get_fuzzy_first_name_matches(first_name_from_nicknames)
          end
@@ -87,23 +85,22 @@ class Person < ActiveRecord::Base
       if not last_name.nil?
         result &= people_by_last_name
       end
-    elsif not last_name.nil?
+    else
       result = people_by_last_name
     end
-    p "Result is :" + result.to_a.to_s
     result
   end
 
   protected
   def handle_saved
-    word = ' ' + self.first_name
+    word = ' ' + self.first_name.downcase
     (0..word.length-3).each do |idx|
-      tg = word[idx,3].downcase
+      tg = word[idx,3]
       PeopleFirstNameTrigram.create(tg: tg, person_id: self.id)
     end
-    word = ' ' + self.last_name
+    word = ' ' + self.last_name.downcase
     (0..word.length-3).each do |idx|
-      tg = word[idx,3].downcase
+      tg = word[idx,3]
       PeopleLastNameTrigram.create(tg: tg, person_id: self.id)
     end
   end
