@@ -6,7 +6,7 @@ class PeopleController < ApplicationController
   end
 
   def search
-    authorize! :index, @user, :message => 'Not authorized to view person information.'
+    authorize! :search, @user, :message => 'Not authorized to view person information.'
     first_name = params[:first_name].strip
     last_name = params[:last_name].strip
     @people = Person.search(first_name.empty? ? nil : first_name, 
@@ -17,11 +17,14 @@ class PeopleController < ApplicationController
   end
 
   def new
+    authorize! :new, @user, :message => 'Not authorized to create person information.'
     @person = Person.new
   end
 
   def create
+    authorize! :create, @user, :message => 'Not authorized to create person information.'
     @person = Person.new(params[:person])
+    @person.user_id = current_user.id
     if @person.save
       redirect_to @person
     else
