@@ -1,0 +1,12 @@
+<h2><%= t "devise.invitations.new.header" %></h2>
+
+<%= simple_form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post} do |f| %>
+  <%= devise_error_messages! %>
+<%= f.input :name %>
+<%= f.input :role_id, :collection => Role.all, :as => :radio_buttons, :label_method => lambda {|t| "#{t.name.titleize}".html_safe}, :label => false, :item_wrapper_class => 'inline', checked: Role.find_by_name('viewer').id %>
+<% resource.class.invite_key_fields.each do |field| -%>
+  <%= f.input field %>
+<% end -%>
+
+<%= f.submit t("devise.invitations.new.submit_button") %>
+<% end %>
