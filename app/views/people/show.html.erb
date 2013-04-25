@@ -1,2 +1,18 @@
 <h3><%= "#{@person.first_name} #{@person.last_name}" %></h3>
 <p>Date added: <%= @person.created_at.to_date %></p>
+<hr>
+<h4>Scans</h4>
+    <ul class="nav nav-list">
+    <% @person.scans.each do |scan| %>
+        <li><%= link_to scan.scan_date, download_scan_path(scan) %> </li>
+    <% end %>
+    </ul>
+    <hr>
+    <h5>Add New Scan</h5>
+      <%= form_tag( person_scans_path(@person), multipart: true)  do %>
+        <%= label(:scan, :scan_date, "Scan date") %>
+        <input type="date" name="scan[scan_date]" />
+        <%= label(:scan, :image, "Scan file") %>
+        <%= file_field(:scan, :image) %><br>
+        <%= submit_tag("Add") %>
+      <% end %>

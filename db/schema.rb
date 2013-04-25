@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130319135406) do
+ActiveRecord::Schema.define(:version => 20130422162533) do
 
   create_table "name_groups", :force => true do |t|
     t.string "names"
@@ -70,6 +70,21 @@ ActiveRecord::Schema.define(:version => 20130319135406) do
 
   add_index "roles", ["name", "resource_type", "resource_id"], :name => "index_roles_on_name_and_resource_type_and_resource_id"
   add_index "roles", ["name"], :name => "index_roles_on_name"
+
+  create_table "scans", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "person_id"
+    t.date     "scan_date"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+  end
+
+  add_index "scans", ["person_id"], :name => "index_scans_on_person_id"
+  add_index "scans", ["user_id"], :name => "index_scans_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                                :default => "", :null => false

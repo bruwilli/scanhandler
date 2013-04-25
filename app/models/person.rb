@@ -1,6 +1,7 @@
 class Person < ActiveRecord::Base
   has_many :people_first_name_trigrams, :dependent => :destroy
   has_many :people_last_name_trigrams, :dependent => :destroy
+  has_many :scans, :dependent => :destroy
   has_one :user # user that created this person
   attr_accessible :first_name, :last_name
   validates :first_name, presence: true, length: { maximum: 64 }
@@ -96,12 +97,12 @@ class Person < ActiveRecord::Base
     word = ' ' + self.first_name.downcase
     (0..word.length-3).each do |idx|
       tg = word[idx,3]
-      PeopleFirstNameTrigram.create(tg: tg, person_id: self.id)
+      self.people_first_name_trigrams.create(tg: tg);
     end
     word = ' ' + self.last_name.downcase
     (0..word.length-3).each do |idx|
       tg = word[idx,3]
-      PeopleLastNameTrigram.create(tg: tg, person_id: self.id)
+      self.people_last_name_trigrams.craete!(tg: tg);
     end
   end
 

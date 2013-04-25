@@ -7,7 +7,7 @@ class NameGroup < ActiveRecord::Base
   private
   def handle_saved
     self.names.split(',').each do |name|
-      Nickname.create!(name: name, name_group_id: self.id)
+      self.nicknames.create(name: name)
     end
   end
 end

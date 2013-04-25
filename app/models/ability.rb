@@ -8,9 +8,11 @@ class Ability
     elsif user.has_role? :editor
       can [:read, :update, :create], Person
       can [:index, :show, :update], User, id: user.id
+      can [:create, :download], Scan
     elsif user.has_role? :viewer
       can :read, Person
       can [:index, :show, :update], User, id: user.id
+      can [:download], Scan
     end
     # Define abilities for the passed in user here. For example:
     #

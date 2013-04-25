@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=IBM437" http-equiv="Content-Type">
+
+<title>Gemfile - RDoc Documentation</title>
+
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
+
+<body class="file">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="./Gemfile.html">Gemfile</a>
+  
+    <li class="file"><a href="./README.html">README</a>
+  
+    <li class="file"><a href="./Rakefile.html">Rakefile</a>
+  
+    <li class="file"><a href="./db/names_txt.html">names</a>
+  
+    <li class="file"><a href="./public/humans_txt.html">humans</a>
+  
+    <li class="file"><a href="./public/robots_txt.html">robots</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./Scanhandler.html">Scanhandler</a>
+  
+    <li><a href="./Scanhandler/Application.html">Scanhandler::Application</a>
+  
+    <li><a href="./Users.html">Users</a>
+  
+    <li><a href="./Users/InvitationsController.html">Users::InvitationsController</a>
+  
+    <li><a href="./Ability.html">Ability</a>
+  
+    <li><a href="./AddConfirmableToUsers.html">AddConfirmableToUsers</a>
+  
+    <li><a href="./AddNameToUsers.html">AddNameToUsers</a>
+  
+    <li><a href="./ApplicationController.html">ApplicationController</a>
+  
+    <li><a href="./ApplicationHelper.html">ApplicationHelper</a>
+  
+    <li><a href="./CreateNameGroups.html">CreateNameGroups</a>
+  
+    <li><a href="./CreateNicknameTrigrams.html">CreateNicknameTrigrams</a>
+  
+    <li><a href="./CreateNicknames.html">CreateNicknames</a>
+  
+    <li><a href="./CreatePeople.html">CreatePeople</a>
+  
+    <li><a href="./CreatePeopleFirstNameTrigrams.html">CreatePeopleFirstNameTrigrams</a>
+  
+    <li><a href="./CreatePeopleLastNameTrigrams.html">CreatePeopleLastNameTrigrams</a>
+  
+    <li><a href="./DeviseCreateUsers.html">DeviseCreateUsers</a>
+  
+    <li><a href="./DeviseInvitableAddToUsers.html">DeviseInvitableAddToUsers</a>
+  
+    <li><a href="./EmailHelpers.html">EmailHelpers</a>
+  
+    <li><a href="./HomeController.html">HomeController</a>
+  
+    <li><a href="./HomeHelper.html">HomeHelper</a>
+  
+    <li><a href="./NameGroup.html">NameGroup</a>
+  
+    <li><a href="./Nickname.html">Nickname</a>
+  
+    <li><a href="./NicknameTrigram.html">NicknameTrigram</a>
+  
+    <li><a href="./Object.html">Object</a>
+  
+    <li><a href="./PeopleController.html">PeopleController</a>
+  
+    <li><a href="./PeopleFirstNameTrigram.html">PeopleFirstNameTrigram</a>
+  
+    <li><a href="./PeopleLastNameTrigram.html">PeopleLastNameTrigram</a>
+  
+    <li><a href="./Person.html">Person</a>
+  
+    <li><a href="./PersonHelper.html">PersonHelper</a>
+  
+    <li><a href="./Role.html">Role</a>
+  
+    <li><a href="./RolifyCreateRoles.html">RolifyCreateRoles</a>
+  
+    <li><a href="./Trigrams.html">Trigrams</a>
+  
+    <li><a href="./User.html">User</a>
+  
+    <li><a href="./UsersController.html">UsersController</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation" class="description">
+  
+<p>source '<a href="https://rubygems.org">rubygems.org</a>' gem 'rails',
+'3.2.11' gem 'sqlite3' group :assets do</p>
+
+<pre>gem 'sass-rails',   '~&gt; 3.2.3'
+gem 'coffee-rails', '~&gt; 3.2.1'
+gem 'uglifier', '&gt;= 1.0.3'</pre>
+
+<p>end gem 'jquery-rails' gem "thin", "&gt;= 1.5.0", :group =&gt; :production
+gem "rspec-rails", "&gt;= 2.12.2", :group =&gt; [:development, :test] gem
+"capybara", "&gt;= 2.0.2", :group =&gt; :test gem "database_cleaner",
+"&gt;= 0.9.1", :group =&gt; :test gem "email_spec", "&gt;= 1.4.0", :group
+=&gt; :test gem "factory_girl_rails", "&gt;= 4.2.0", :group =&gt;
+[:development, :test] gem "bootstrap-sass", "&gt;= 2.3.0.0" gem "devise",
+"&gt;= 2.2.3" gem "devise_invitable", "&gt;= 1.1.5" gem "cancan", "&gt;=
+1.6.8" gem "rolify", "&gt;= 3.2.0" gem "simple_form", "&gt;= 2.0.4" gem
+"quiet_assets", "&gt;= 1.0.1", :group =&gt; :development gem "figaro",
+"&gt;= 0.5.3" gem "better_errors", "&gt;= 0.6.0", :group =&gt; :development
+gem "binding_of_caller", "&gt;= 0.7.1", :group =&gt; :development,
+:platforms =&gt; [:mri_19, :rbx] gem "seed-fu", '&gt;= 2.1.0', :group =&gt;
+[:development, :production] if RUBY_PLATFORM =~ /i386-mingw32/i</p>
+
+<pre class="ruby"><span class="ruby-identifier">gem</span> <span class="ruby-string">&quot;rmagick&quot;</span>, <span class="ruby-string">&quot;2.12.0&quot;</span>, :<span class="ruby-identifier">group</span> =<span class="ruby-operator">&gt;</span> [:<span class="ruby-identifier">development</span>, :<span class="ruby-identifier">production</span>], :<span class="ruby-identifier">path</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;C:\\Sites\\LocalGems\\RMagick&quot;</span>
+</pre>
+
+<p>else</p>
+
+<pre class="ruby"><span class="ruby-identifier">gem</span> <span class="ruby-string">&quot;rmagick&quot;</span>, <span class="ruby-string">&quot;&gt;=2.13.0&quot;</span>, :<span class="ruby-identifier">group</span> =<span class="ruby-operator">&gt;</span> [:<span class="ruby-identifier">development</span>, :<span class="ruby-identifier">production</span>]
+</pre>
+
+<p>end</p>
+
+<p>gem "faker", "&gt;=1.1.2", :group =&gt; [:development, :test] gem
+"populate", "&gt;=0.0.2", :group =&gt; [:development, :test] gem
+"debugger", :group =&gt; [:development, :test] gem "paperclip", "~&gt; 3.0"</p>
+
+</div>
+
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.2.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

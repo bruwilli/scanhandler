@@ -2,10 +2,10 @@ class Users::InvitationsController < Devise::InvitationsController
   before_filter :authenticate_user!
 
   def create
-    authorize! :create, @user, :message => 'Not authorized to invite new users'
+    authorize! :create, User, :message => 'Not authorized to invite new users'
     @role = Role.find(resource_params[:role_id])
-    self.resource = User.invite!({ email: resource_params[:email],
-                                             name: resource_params[:name] }, current_inviter) if not @role.nil?
+    debugger
+    self.resource = User.invite!({ email: resource_params[:email] }, current_inviter) if not @role.nil?
 
     if resource.errors.empty? and 
        not @role.nil? and
@@ -18,7 +18,12 @@ class Users::InvitationsController < Devise::InvitationsController
   end
 
   def new
-    authorize! :create, @user, :message => 'Not authorized to invite new users'
+    authorize! :create, User, :message => 'Not authorized to invite new users'
+    super
+  end
+
+  def destroy
+    authorize! :destroy, User, :message => 'Not authorized to invite new users'
     super
   end
 end
