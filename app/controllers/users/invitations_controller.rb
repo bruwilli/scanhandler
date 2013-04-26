@@ -4,7 +4,6 @@ class Users::InvitationsController < Devise::InvitationsController
   def create
     authorize! :create, User, :message => 'Not authorized to invite new users'
     @role = Role.find(resource_params[:role_id])
-    debugger
     self.resource = User.invite!({ email: resource_params[:email] }, current_inviter) if not @role.nil?
 
     if resource.errors.empty? and 

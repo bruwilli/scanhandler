@@ -2,7 +2,7 @@ class Person < ActiveRecord::Base
   has_many :people_first_name_trigrams, :dependent => :destroy
   has_many :people_last_name_trigrams, :dependent => :destroy
   has_many :scans, :dependent => :destroy
-  has_one :user # user that created this person
+  belongs_to :user # user that created this person
   attr_accessible :first_name, :last_name
   validates :first_name, presence: true, length: { maximum: 64 }
   validates :last_name, presence: true, length: { maximum: 64 }
@@ -94,15 +94,18 @@ class Person < ActiveRecord::Base
 
   protected
   def handle_saved
+    PeopleFirstNameTrigram.delete_all(:person_id => self.id) 
     word = ' ' + self.first_name.downcase
     (0..word.length-3).each do |idx|
       tg = word[idx,3]
       self.people_first_name_trigrams.create(tg: tg);
     end
+
+    PeopleLastNameTrigram.delete_all(:person_id => self.id) 
     word = ' ' + self.last_name.downcase
     (0..word.length-3).each do |idx|
       tg = word[idx,3]
-      self.people_last_name_trigrams.craete!(tg: tg);
+      self.people_last_name_trigrams.create(tg: tg);
     end
   end
 

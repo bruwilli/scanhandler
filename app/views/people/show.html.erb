@@ -1,18 +1,38 @@
 <h3><%= "#{@person.first_name} #{@person.last_name}" %></h3>
-<p>Date added: <%= @person.created_at.to_date %></p>
-<hr>
-<h4>Scans</h4>
-    <ul class="nav nav-list">
-    <% @person.scans.each do |scan| %>
-        <li><%= link_to scan.scan_date, download_scan_path(scan) %> </li>
-    <% end %>
-    </ul>
-    <hr>
-    <h5>Add New Scan</h5>
-      <%= form_tag( person_scans_path(@person), multipart: true)  do %>
-        <%= label(:scan, :scan_date, "Scan date") %>
-        <input type="date" name="scan[scan_date]" />
-        <%= label(:scan, :image, "Scan file") %>
-        <%= file_field(:scan, :image) %><br>
-        <%= submit_tag("Add") %>
+<h4><%= "Added on #{@person.created_at.to_date} by #{@person.user.name.nil? ? @person.user.email : @person.user.name}" %></h4>
+<% if not @person.scans.nil? and @person.scans.count > 0 %>
+  <legend>Scans</legend>
+  <table class="table table-hover">
+    <thead>
+      <th>Date Scanned</th>
+      <th>Date Added</th>
+      <th>Added By</th>
+      <th></th>
+    </thead>
+    <tbody>
+      <% @person.scans.each do |scan| %>
+          <tr>
+            <td><%= scan.scan_date %></td>
+            <td><%= scan.created_at.to_date %></td>
+            <td><%= scan.user.name.nil? ? scan.user.email : scan.user.name %></td>
+            <td><%= link_to 'download', download_scan_path(scan) %></td>
+          </tr>
       <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <h5>No Scans</h5>
+<% end %>
+<% if can? :create, Scan %>
+  <legend>Add Scan</legend>
+  <%= form_tag( person_scans_path(@person), multipart: true, class: "form-inline" )  do %>
+      <label for="scan_date">Date of Scan</label><input type="date" name="scan[scan_date]" class="input-date" id="scan_date" required="true"/>
+      <%= file_field(:scan, :image, {class: "input-file", id: "input_file", style: "display:none", required: true}) %>
+      <button type="button" class="btn" id="file_chooser_dummy">Select Scan File</button> Selected file: <span id="selected_file">none</span>&nbsp;&nbsp;&nbsp;<br>
+      <%= submit_tag("Add Scan", {class: "btn btn-primary"}) %> 
+      <script>
+          $('#file_chooser_dummy').click(function() { $('#input_file').trigger('click')})
+          $('#input_file').change(function() {$('#selected_file').html($(this).val().replace(/\\/g,'/').replace( /.*\//, '' )); })
+      </script>
+  <% end %>
+<% end %>
