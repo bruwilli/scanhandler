@@ -1,6 +1,6 @@
 Scanhandler::Application.routes.draw do
   authenticated :user do
-    root :to => 'home#index'
+    root :to => 'people#index'
   end
   devise_scope :user do
   	root :to => "devise/sessions#new"

@@ -1,25 +1,55 @@
+require 'action_view'
+include ActionView::Helpers::NumberHelper
+
 class Scan < ActiveRecord::Base
+  MAX_FILE_SIZE = 5.megabytes
   belongs_to :user
   belongs_to :person
   attr_accessible :scan_date, :image
-  has_attached_file :image
-  validates_attachment :image, :presence => true,
-                                :content_type => { :content_type => ["image/jpg","image/png", "application/pdf", "image/tiff", "image/jpeg" ]},
-                                :size => { :in => 0..5.megabytes }
+  has_attached_file :image, styles: { :original => ["100%", :pdf] }, processors: [:pdf_processor]
+  #validates_attachment :image, :presence => true,
+                                #:content_type => { :content_type => ["image/jpg","image/png", "application/pdf", "image/tiff", "image/jpeg" ]},
+                                #:size => { :in => 0..5.megabytes }
+  validates_attachment_presence :image, message: "You must supply a scan image file"
+  #validate :validate_image_file_size
+  #validates_attachment_content_type :image, content_type: ["image/jpg",
+                                                           #"image/png", 
+                                                           #"application/pdf", 
+                                                           #"image/tiff", 
+                                                           #"image/jpeg" ], 
+                                            #message: "Only jpf, png, pdf, or tiff files are allowed"
+  #validates_attachment_size :image, less_than: 5.megabytes, message: "Files must be less than 5 megabytes"
+
   validates :scan_date, presence: true
   validate :scan_date_not_in_future
+  validate :correct_content_type
+  validate :acceptable_file_size
 
   before_save :rename_image
 
 private
+  def correct_content_type
+    if !['image/jpg', 'image/png','application/pdf', 'image/tiff','image/jpeg'].include?(self.image_content_type)
+      errors.add(:image, "Only jpf, png, pdf, or tiff files are allowed")
+    end
+  end
+
+  def acceptable_file_size
+    file_size = self.image_file_size
+    if not file_size.nil? and not file_size < MAX_FILE_SIZE
+      errors.add(:image, "Maximum scan file size is " + number_to_human_size(MAX_FILE_SIZE) + 
+                         ".  Yours was " + number_to_human_size(file_size))
+    end
+  end
+
+
   def rename_image
     if self.new_record?
-      extension = File.extname(image_file_name).downcase
       num_scans = 0
       person = self.person
       scans = person.scans
       num_scans = scans.count if not scans.nil?
-      new_file_name = "#{person.first_name}_#{person.last_name}_scan#{(num_scans + 1).to_s}#{extension}"
+      new_file_name = "#{person.first_name}_#{person.last_name}_scan#{(num_scans + 1).to_s}.pdf"
       new_file_name = sanitize_filename(new_file_name)
       self.image.instance_write :file_name, new_file_name
     end

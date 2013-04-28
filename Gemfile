@@ -24,11 +24,13 @@ gem "figaro", ">= 0.5.3"
 gem "better_errors", ">= 0.6.0", :group => :development
 gem "binding_of_caller", ">= 0.7.1", :group => :development, :platforms => [:mri_19, :rbx]
 gem "seed-fu", '>= 2.1.0', :group => [:development, :production]
-if RUBY_PLATFORM =~ /i386-mingw32/i
-  gem "rmagick", "2.12.0", :group => [:development, :production], :path => "C:\\Sites\\LocalGems\\RMagick"
-else
-  gem "rmagick", ">=2.13.0", :group => [:development, :production]
-end	
+#if RUBY_PLATFORM =~ /i386-mingw32/i
+  #gem "rmagick", "2.12.0", :group => [:development, :production], :path => "C:\\Sites\\LocalGems\\RMagick"
+#else
+  #gem "rmagick", ">=2.13.0", :group => [:development, :production]
+#end	
+gem "rmagick", "2.13.2", :group => [:development, :production]
+#gem "mini_magick"
 gem "faker", ">=1.1.2", :group => [:development, :test]
 gem "populate", ">=0.0.2", :group => [:development, :test]
 gem "debugger", :group => [:development, :test]

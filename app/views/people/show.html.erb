@@ -15,7 +15,12 @@
             <td><%= scan.scan_date %></td>
             <td><%= scan.created_at.to_date %></td>
             <td><%= scan.user.name.nil? ? scan.user.email : scan.user.name %></td>
-            <td><%= link_to 'download', download_scan_path(scan) %></td>
+            <td><%= link_to 'Download', download_scan_path(scan) %>
+                <% if can? :destroy, Scan %>
+                  <%= link_to "Delete", destroy_scan_path(scan), 
+                      :confirm => 'Are you sure?', :method => :delete %>
+                <% end %>
+            </td>
           </tr>
       <% end %>
     </tbody>

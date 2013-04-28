@@ -3,7 +3,7 @@ class ScansController < ApplicationController
   respond_to :html, :json, :xml
 
   def create
-    authorize! :create, current_user, :message => 'Not authorized to create scans.'
+    authorize! :create, Scan, :message => 'Not authorized to create scans.'
     @person = Person.find(params[:person_id])
     @scan = @person.scans.build(params[:scan])
     @scan.user_id = current_user.id if @scan
@@ -18,15 +18,16 @@ class ScansController < ApplicationController
   end
 
   def destroy
-   authorize! :destroy, current_user, :message => 'Not authorized to destroy scans.'
+   authorize! :destroy, Scan, :message => 'Not authorized to destroy scans.'
    @scan = Scan.find(params[:id])
    @scan.destroy
 
+   flash[:notice] = 'Scan was successfully deleted'
    redirect_to @scan.person
    end
 
    def download
-   authorize! :download, current_user, :message => 'Not authorized to download scans.'
+   authorize! :download, Scan, :message => 'Not authorized to download scans.'
    @scan = Scan.find(params[:id])
    send_file @scan.image.path, type: 'application/pdf', filename: @scan.image_file_name
    end
