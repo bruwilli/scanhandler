@@ -7,6 +7,7 @@ class Scan < ActiveRecord::Base
                                 :content_type => { :content_type => ["image/jpg","image/png", "application/pdf", "image/tiff", "image/jpeg" ]},
                                 :size => { :in => 0..5.megabytes }
   validates :scan_date, presence: true
+  validate :scan_date_not_in_future
 
   before_save :rename_image
 
@@ -38,5 +39,11 @@ private
 
     # Finally, join the parts with a period and return the result
     return fn.join '.'
+  end
+
+  def scan_date_not_in_future
+    if !scan_date.blank? and scan_date > Date.today
+      errors.add(:scan_date, "can't be in future")
+    end
   end
 end

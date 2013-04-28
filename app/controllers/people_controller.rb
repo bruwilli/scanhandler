@@ -35,6 +35,7 @@ class PeopleController < ApplicationController
   def show
    authorize! :read, current_user, :message => 'Not authorized to view person information.'
    @person = Person.find(params[:id])
+   @scan = Scan.new
   end
   
   def update

@@ -25,14 +25,16 @@
 <% end %>
 <% if can? :create, Scan %>
   <legend>Add Scan</legend>
-  <%= form_tag( person_scans_path(@person), multipart: true, class: "form-inline" )  do %>
-      <label for="scan_date">Date of Scan</label><input type="date" name="scan[scan_date]" class="input-date" id="scan_date" required="true"/>
-      <%= file_field(:scan, :image, {class: "input-file", id: "input_file", style: "display:none", required: true}) %>
-      <button type="button" class="btn" id="file_chooser_dummy">Select Scan File</button> Selected file: <span id="selected_file">none</span>&nbsp;&nbsp;&nbsp;<br>
-      <%= submit_tag("Add Scan", {class: "btn btn-primary"}) %> 
-      <script>
-          $('#file_chooser_dummy').click(function() { $('#input_file').trigger('click')})
-          $('#input_file').change(function() {$('#selected_file').html($(this).val().replace(/\\/g,'/').replace( /.*\//, '' )); })
-      </script>
+  <%= simple_form_for @scan,
+      url: person_scans_path(@person),
+      method: 'post',
+      multipart: true do |f| %>
+  <%= f.input :image, as: :file, label: "Scan image file (PDF, jpg, png, or tiff)" %>
+  <%= f.input :scan_date, as: :date, 
+                          label: "Date of scan",
+                          year: Date.today.year,
+                          month: Date.today.month,
+                          day: Date.today.day %>
+  <%= f.button :submit %>
   <% end %>
 <% end %>
