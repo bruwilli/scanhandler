@@ -11,7 +11,7 @@ class Person < ActiveRecord::Base
 
   def self.search(first_name , last_name, is_fuzzy = false, include_nicknames = false)
     if last_name.nil? and first_name.nil?
-      return order(:last_name)
+      return includes(:scans).order(:last_name)
     end
 
     # handle fastest search with a special case
@@ -20,15 +20,15 @@ class Person < ActiveRecord::Base
         if not last_name.nil?
           first_name.downcase!
           last_name.downcase!
-          return where("first_name like :first_name and last_name like :last_name", 
+          return includes(:scans).where("first_name like :first_name and last_name like :last_name", 
                          {first_name: first_name + '%', last_name: last_name + '%'} )
         else
           first_name.downcase!
-          return where("first_name like :search", {search: first_name + '%'} ).order("length(first_name)")
+          return includes(:scans).where("first_name like :search", {search: first_name + '%'} ).order("length(first_name)")
         end
       else 
         last_name.downcase!
-        return where("last_name like :search", {search: last_name + '%'} ).order("length(last_name)")
+        return includes(:scans).where("last_name like :search", {search: last_name + '%'} ).order("length(last_name)")
       end
     end
 
@@ -40,7 +40,7 @@ class Person < ActiveRecord::Base
 
     if not last_name.nil?
       last_name.downcase!
-      people_by_last_name = where("last_name like :search", {search: last_name + '%'} ).order("length(last_name)").to_a
+      people_by_last_name = includes(:scans).where("last_name like :search", {search: last_name + '%'} ).order("length(last_name)").to_a
       if is_fuzzy
         people_by_last_name |= get_fuzzy_last_name_matches(last_name)
       end
@@ -48,7 +48,7 @@ class Person < ActiveRecord::Base
 
     if not first_name.nil?
       first_name.downcase!
-      people_by_first_name = where("first_name like :search", {search: first_name + '%'} ).order("length(first_name)")
+      people_by_first_name = includes(:scans).where("first_name like :search", {search: first_name + '%'} ).order("length(first_name)")
       if is_fuzzy
         people_by_first_name_fuzzy = get_fuzzy_first_name_matches(first_name)
       end
@@ -69,7 +69,7 @@ class Person < ActiveRecord::Base
         end
 
         first_names_from_nicknames.each do |first_name_from_nicknames|
-          people_by_first_name_with_nicknames |= find_all_by_first_name(first_name_from_nicknames)
+          people_by_first_name_with_nicknames |= includes(:scans).find_all_by_first_name(first_name_from_nicknames)
           if is_fuzzy
             people_by_first_name_with_nicknames_fuzzy |= get_fuzzy_first_name_matches(first_name_from_nicknames)
          end
@@ -114,7 +114,8 @@ class Person < ActiveRecord::Base
     first_name = " #{first_name} "
     limit = 4
     trigram_list = (0..first_name.length-3).collect { |idx| first_name[idx,3] }
-    people = Person.joins(:people_first_name_trigrams)
+    people = Person.includes(:scans)
+    people = people.joins(:people_first_name_trigrams)
     people = people.where(["tg IN (?)", trigram_list])
     people = people.group(:person_id)
     people = people.order('SUM(score) DESC')
@@ -127,7 +128,8 @@ class Person < ActiveRecord::Base
     last_name = " #{last_name} "
     limit = 4
     trigram_list = (0..last_name.length-3).collect { |idx| last_name[idx,3] }
-    people = Person.joins(:people_last_name_trigrams)
+    people = Person.includes(:scans)
+    people = people.joins(:people_last_name_trigrams)
     people = people.where(["tg IN (?)", trigram_list])
     people = people.group(:person_id)
     people = people.order('SUM(score) DESC')

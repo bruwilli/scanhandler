@@ -34,7 +34,7 @@ class PeopleController < ApplicationController
 
   def show
    authorize! :read, Person, :message => 'Not authorized to view person information.'
-   @person = Person.find(params[:id])
+   @person = Person.includes(:scans).find(params[:id])
    @scan = Scan.new
   end
   
