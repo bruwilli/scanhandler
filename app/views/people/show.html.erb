@@ -2,7 +2,7 @@
 <h4><%= "Added on #{@person.created_at.to_date} by #{@person.user.name.nil? ? @person.user.email : @person.user.name}" %></h4>
 <% if not @person.scans.nil? and @person.scans.count > 0 %>
   <legend>Scans</legend>
-  <table class="table table-hover">
+  <table class="table table-condensed table-hover">
     <thead>
       <th>Date Scanned</th>
       <th>Date Scan Submitted</th>

@@ -1,12 +1,8 @@
 <h3>Coach Lookup</h3>
 <% person = Person.new %> 
 
-<%= form_tag(people_search_path, method: :get, id: "person-search-form" ) do %>
-  <%= label_tag(:first_name, "First name:") %>
-  <%= text_field_tag(:first_name, nil, autocomplete: "off") %>
-  <%= label_tag(:last_name, "Last name:") %>
-  <%= text_field_tag(:last_name, nil, autocomplete: "off") %><br>
-  Fuzzy search: <%= check_box_tag(:fuzzy) %><br>
-  Search for nicknames: <%= check_box_tag(:nicknames) %><br>
+<%= form_tag(people_search_path, method: :get, id: "person-search-form", class: "form-inline" ) do %>
+    <%= text_field_tag :first_name, nil, autocomplete: "off", class: "input-medium", placeholder: "First Name" %>
+    <%= text_field_tag :last_name, nil, autocomplete: "off", class: "input-medium", placeholder: "Last Name" %>
 <% end %>
 <div id="person-search-results"></div>

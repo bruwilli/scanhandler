@@ -11,8 +11,8 @@ class PeopleController < ApplicationController
     last_name = params[:last_name].strip
     @people = Person.search(first_name.empty? ? nil : first_name, 
                             last_name.empty? ? nil : last_name,
-                            params[:fuzzy],
-                            params[:nicknames])
+                            true,
+                            true)
     render partial: 'people/search'
   end
 
