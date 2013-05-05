@@ -36,13 +36,11 @@
   <%= simple_form_for @scan,
       url: person_scans_path(@person),
       method: 'post',
-      multipart: true do |f| %>
+      multipart: true,
+      class: "form-inline" do |f| %>
   <%= f.input :image, as: :file, label: "Scan image file (PDF, jpg, png, or tiff)" %>
-  <%= f.input :scan_date, as: :date, 
-                          label: "Date of scan",
-                          year: Date.today.year,
-                          month: Date.today.month,
-                          day: Date.today.day %>
+  <%= f.input :scan_date, as: :hidden %>
+  Date of scan: <div id="scan_datepicker"></div>
   <%= f.button :submit %>
   <% end %>
 <% end %>

@@ -1,7 +1,7 @@
 class Person < ActiveRecord::Base
-  has_many :people_first_name_trigrams, :dependent => :destroy
-  has_many :people_last_name_trigrams, :dependent => :destroy
-  has_many :scans, :dependent => :destroy
+  has_many :people_first_name_trigrams, dependent: :destroy
+  has_many :people_last_name_trigrams, dependent: :destroy
+  has_many :scans, order: :scan_date, dependent: :destroy
   belongs_to :user # user that created this person
   attr_accessible :first_name, :last_name
   validates :first_name, presence: true, length: { maximum: 64 }

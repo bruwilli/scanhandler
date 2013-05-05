@@ -5,7 +5,9 @@ class ScansController < ApplicationController
   def create
     authorize! :create, Scan, :message => 'Not authorized to create scans.'
     @person = Person.find(params[:person_id])
+    p "******************************" + params[:scan][:scan_date]
     @scan = @person.scans.build(params[:scan])
+
     @scan.user_id = current_user.id if @scan
     if @scan.save
       flash[:notice] = 'Scan was successfully saved'
