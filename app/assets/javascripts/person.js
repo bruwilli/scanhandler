@@ -36,12 +36,9 @@ $(document).ready(function() {
 
 $(document).ready(function() {
     var today = new Date();
-    var scanDatePicker = $('#scan_datepicker').datepicker({dateFormat: 'yy/mm/dd', 
-                                                           defaultDate: today,
-                                                           maxDate: today,
-                                                           changeMonth: true,
-                                                           changeYear: true,
-                                                           onSelect: function(dateText) {$('#scan_scan_date').val(dateText); }
-                                                          });
-    $('#scan_scan_date').val(scanDatePicker.val());
+    $('#scan_scan_date').datepicker({dateFormat: 'yy/mm/dd', 
+                                      defaultDate: today,
+                                      maxDate: today,
+                                      changeMonth: true,
+                                      changeYear: true});
 })

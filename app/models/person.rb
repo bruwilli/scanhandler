@@ -20,15 +20,15 @@ class Person < ActiveRecord::Base
         if not last_name.nil?
           first_name.downcase!
           last_name.downcase!
-          return includes(:scans).where("first_name like :first_name and last_name like :last_name", 
+          return includes(:scans).where("lower(first_name) like lower(:first_name) and lower(last_name) like lower(:last_name)", 
                          {first_name: first_name + '%', last_name: last_name + '%'} )
         else
           first_name.downcase!
-          return includes(:scans).where("first_name like :search", {search: first_name + '%'} ).order("length(first_name)")
+          return includes(:scans).where("lower(first_name) like lower(:search)", {search: first_name + '%'} ).order("char_length(first_name)")
         end
       else 
         last_name.downcase!
-        return includes(:scans).where("last_name like :search", {search: last_name + '%'} ).order("length(last_name)")
+        return includes(:scans).where("lower(last_name) like lower(:search)", {search: last_name + '%'} ).order("char_length(last_name)")
       end
     end
 
@@ -40,7 +40,7 @@ class Person < ActiveRecord::Base
 
     if not last_name.nil?
       last_name.downcase!
-      people_by_last_name = includes(:scans).where("last_name like :search", {search: last_name + '%'} ).order("length(last_name)").to_a
+      people_by_last_name = includes(:scans).where("lower(last_name) like lower(:search)", {search: last_name + '%'} ).order("char_length(last_name)").to_a
       if is_fuzzy
         people_by_last_name |= get_fuzzy_last_name_matches(last_name)
       end
@@ -48,7 +48,7 @@ class Person < ActiveRecord::Base
 
     if not first_name.nil?
       first_name.downcase!
-      people_by_first_name = includes(:scans).where("first_name like :search", {search: first_name + '%'} ).order("length(first_name)")
+      people_by_first_name = includes(:scans).where("lower(first_name) like lower(:search)", {search: first_name + '%'} ).order("char_length(first_name)")
       if is_fuzzy
         people_by_first_name_fuzzy = get_fuzzy_first_name_matches(first_name)
       end
@@ -114,13 +114,18 @@ class Person < ActiveRecord::Base
     first_name = " #{first_name} "
     limit = 4
     trigram_list = (0..first_name.length-3).collect { |idx| first_name[idx,3] }
+    sql = 'select *
+           from people
+           inner join(
+             select person_id, count(person_id) as score
+             from people_first_name_trigrams
+             where tg in (?)
+             group by person_id
+             order by score desc
+             limit ' + limit.to_s + ') as scored_person_first_names
+           on people.id = scored_person_first_names.person_id'
     people = Person.includes(:scans)
-    people = people.joins(:people_first_name_trigrams)
-    people = people.where(["tg IN (?)", trigram_list])
-    people = people.group(:person_id)
-    people = people.order('SUM(score) DESC')
-    people = people.having('SUM(score) > ?', 1)
-    people = people.limit(limit) if limit > 0
+    people = people.find_by_sql([sql, trigram_list])
     people
   end
 
@@ -128,13 +133,18 @@ class Person < ActiveRecord::Base
     last_name = " #{last_name} "
     limit = 4
     trigram_list = (0..last_name.length-3).collect { |idx| last_name[idx,3] }
+    sql = 'select *
+           from people
+           inner join(
+             select person_id, count(person_id) as score
+             from people_last_name_trigrams
+             where tg in (?)
+             group by person_id
+             order by score desc
+             limit ' + limit.to_s + ') as scored_person_last_names
+           on people.id = scored_person_last_names.person_id'
     people = Person.includes(:scans)
-    people = people.joins(:people_last_name_trigrams)
-    people = people.where(["tg IN (?)", trigram_list])
-    people = people.group(:person_id)
-    people = people.order('SUM(score) DESC')
-    people = people.having('SUM(score) > ?', 1)
-    people = people.limit(limit) if limit > 0
+    people = people.find_by_sql([sql, trigram_list])
     people
   end
 

@@ -1,7 +1,28 @@
 <h3><%= "#{@person.first_name} #{@person.last_name}" %></h3>
 <h4><%= "Added on #{@person.created_at.to_date} by #{@person.user.name.nil? ? @person.user.email : @person.user.name}" %></h4>
-<% if not @person.scans.nil? and @person.scans.count > 0 %>
-  <legend>Scans</legend>
+  <legend>Scans
+    <% if can? :create, Scan %>
+      <button type="button" class="btn" data-toggle="collapse" data-target="#add_scan_collapsible">
+        <i class="icon-plus"></i> add
+      </button>
+    <% end %>
+  </legend>
+  <% if can? :create, Scan %>
+    <%= @scan.errors.count > 0 ? 
+            '<div id="add_scan_collapsible" class="collapse in">'.html_safe: 
+            '<div id="add_scan_collapsible" class="collapse">'.html_safe %>
+      <%= simple_form_for @scan,
+          url: person_scans_path(@person),
+          method: 'post',
+          multipart: true,
+          html: {class: 'form-inline'} do |f| %>
+        <%= f.input :scan_date, as: :string, label: "Date of scan" %>
+        <%= f.input :image, as: :file %>
+        <%= f.button :submit %>
+      <% end %>
+    </div>
+  <% end %>
+  <% if not @person.scans.nil? and @person.scans.count > 0 %>
   <table class="table table-condensed table-hover">
     <thead>
       <th>Date Scanned</th>
@@ -34,19 +55,4 @@
       <% end %>
     </tbody>
   </table>
-<% else %>
-  <h5>No Scans</h5>
-<% end %>
-<% if can? :create, Scan %>
-  <legend>Add Scan</legend>
-  <%= simple_form_for @scan,
-      url: person_scans_path(@person),
-      method: 'post',
-      multipart: true,
-      class: "form-inline" do |f| %>
-  <%= f.input :image, as: :file, label: "Scan image file (PDF, jpg, png, or tiff)" %>
-  <%= f.input :scan_date, as: :hidden %>
-  Date of scan: <div id="scan_datepicker"></div>
-  <%= f.button :submit %>
-  <% end %>
 <% end %>

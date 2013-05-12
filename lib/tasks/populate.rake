@@ -16,17 +16,16 @@ namespace :db do
     50.times do |n|
       first_name  = Faker::Name.first_name
       last_name  = Faker::Name.last_name
-      Person.create!(first_name: first_name,
-                     last_name: last_name)
+      User.first.people.create!(first_name: first_name, last_name: last_name)
     end
-    Person.create!(first_name: "Bob", last_name: "Johnson")
-    Person.create!(first_name: "Roberta", last_name: "Jackson")
-    Person.create!(first_name: "Jerry", last_name: "Willams")
-    Person.create!(first_name: "Bill", last_name: "Torrey")
-    Person.create!(first_name: "Robby", last_name: "Passy")
-    Person.create!(first_name: "Robby", last_name: "Baker")
-    Person.create!(first_name: "Robby", last_name: "Willis")
-    Person.create!(first_name: "Joseph", last_name: "Baker")
-    Person.create!(first_name: "Jessica", last_name: "Johnson")
+    User.first.people.create!(first_name: "Bob", last_name: "Johnson")
+    User.first.people.create!(first_name: "Roberta", last_name: "Jackson")
+    User.first.people.create!(first_name: "Jerry", last_name: "Willams")
+    User.first.people.create!(first_name: "Bill", last_name: "Torrey")
+    User.first.people.create!(first_name: "Robby", last_name: "Passy")
+    User.first.people.create!(first_name: "Robby", last_name: "Baker")
+    User.first.people.create!(first_name: "Robby", last_name: "Willis")
+    User.first.people.create!(first_name: "Joseph", last_name: "Baker")
+    User.first.people.create!(first_name: "Jessica", last_name: "Johnson")
   end
 end

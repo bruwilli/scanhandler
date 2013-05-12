@@ -7,7 +7,7 @@ class Nickname < ActiveRecord::Base
 
   def self.search(search, is_fuzzy = false) 
     if search  
-      nicknames = where("name like :search", {search: search + '%'} ).order("length(name)")
+      nicknames = where("lower(name) like lower(:search)", {search: search + '%'} ).order("length(name)")
       if is_fuzzy == true and nicknames.count == 0
         Nickname.get_fuzzy_matches(search.downcase)
       else
@@ -31,12 +31,22 @@ class Nickname < ActiveRecord::Base
     word = " #{word} "
     limit = 4
     trigram_list = (0..word.length-3).collect { |idx| word[idx,3] }
-    nicknames = Nickname.joins(:nickname_trigrams)
-    nicknames = nicknames.where(["tg IN (?)", trigram_list])
-    nicknames = nicknames.group(:nickname_id)
-    nicknames = nicknames.order('SUM(score) DESC')
-    nicknames = nicknames.includes(:name_group)
-    nicknames = nicknames.limit(limit) if limit > 0
+    sql = 'select *
+           from nicknames
+           inner join(
+             select nickname_id, count(nickname_id) as score
+             from nickname_trigrams
+             where tg in (?)
+             group by nickname_id
+             order by score desc
+             limit ' + limit.to_s + ') as scored_nicknames
+           on nicknames.id = scored_nicknames.nickname_id'
+    nicknames = Nickname.find_by_sql([sql, trigram_list])
+    #nicknames = nicknames.where(["tg IN (?)", trigram_list])
+    #nicknames = nicknames.group(:nickname_id)
+    #nicknames = nicknames.order('SUM(score) DESC')
+    #nicknames = nicknames.includes(:name_group)
+    #nicknames = nicknames.limit(limit) if limit > 0
     nicknames
   end
 end

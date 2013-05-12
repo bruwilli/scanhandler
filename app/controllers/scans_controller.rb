@@ -5,7 +5,6 @@ class ScansController < ApplicationController
   def create
     authorize! :create, Scan, :message => 'Not authorized to create scans.'
     @person = Person.find(params[:person_id])
-    p "******************************" + params[:scan][:scan_date]
     @scan = @person.scans.build(params[:scan])
 
     @scan.user_id = current_user.id if @scan
@@ -31,6 +30,6 @@ class ScansController < ApplicationController
    def download
    authorize! :download, Scan, :message => 'Not authorized to download scans.'
    @scan = Scan.find(params[:id])
-   send_file @scan.image.path, type: 'application/pdf', filename: @scan.image_file_name
+   send_file @scan.image.path(:pdf), type: 'application/pdf', filename: @scan.image_file_name
    end
 end
