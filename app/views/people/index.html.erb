@@ -4,5 +4,6 @@
 <%= form_tag(people_search_path, method: :get, id: "person-search-form", class: "form-inline" ) do %>
     <%= text_field_tag :first_name, nil, autocomplete: "off", class: "input-medium", placeholder: "First Name" %>
     <%= text_field_tag :last_name, nil, autocomplete: "off", class: "input-medium", placeholder: "Last Name" %>
+    <%= button_tag 'Add new', type: 'button', class: "btn btn-primary" %>
 <% end %>
 <div id="person-search-results"></div>

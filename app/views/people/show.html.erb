@@ -18,7 +18,7 @@
           html: {class: 'form-inline'} do |f| %>
         <%= f.input :scan_date, as: :string, label: "Date of scan" %>
         <%= f.input :image, as: :file %>
-        <%= f.button :submit %>
+        <%= f.button :submit, class: 'btn btn-primary' %>
       <% end %>
     </div>
   <% end %>
