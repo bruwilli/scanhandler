@@ -1,9 +1,7 @@
 namespace :db do
-  namespace :development do
-    require 'faker'
-
-    desc "Fill database with sample data"
     task :populate => :environment do
+      desc "Fill database with sample data"
+      require 'faker'
       NameGroup.destroy_all
       NameGroup.create!(names: "Jon,Jonathan,John,Johnny")
       NameGroup.create!(names: "Bob,Bobby,Robert,Rob,Robby")
@@ -29,5 +27,4 @@ namespace :db do
       User.first.people.create!(first_name: "Joseph", last_name: "Baker")
       User.first.people.create!(first_name: "Jessica", last_name: "Johnson")
     end
-  end
 end
