@@ -720,4 +720,4 @@ NameGroup.create!(names: 'yeona,ona,onie')
 NameGroup.create!(names: 'yulan,lan,yul')
 NameGroup.create!(names: 'yvonne,vonna')
 NameGroup.create!(names: 'zachariah,zach,zacharias,zachary,zeke')
-NameGroup.create!(names: 'zedediah,zed' }
+NameGroup.create!(names: 'zedediah,zed')
