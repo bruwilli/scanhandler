@@ -121,6 +121,7 @@ class Person < ActiveRecord::Base
              from people_first_name_trigrams
              where tg in (?)
              group by person_id
+             having count(person_id) > 1
              order by score desc
              limit ' + limit.to_s + ') as scored_person_first_names
            on people.id = scored_person_first_names.person_id'
@@ -140,6 +141,7 @@ class Person < ActiveRecord::Base
              from people_last_name_trigrams
              where tg in (?)
              group by person_id
+             having count(person_id) > 1
              order by score desc
              limit ' + limit.to_s + ') as scored_person_last_names
            on people.id = scored_person_last_names.person_id'
