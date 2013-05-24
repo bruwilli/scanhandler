@@ -7,18 +7,7 @@ class Scan < ActiveRecord::Base
   belongs_to :person
   attr_accessible :scan_date, :image
   has_attached_file :image, styles: { :pdf => ["100%", :pdf] }, processors: [:pdf_processor]
-  #validates_attachment :image, :presence => true,
-                                #:content_type => { :content_type => ["image/jpg","image/png", "application/pdf", "image/tiff", "image/jpeg" ]},
-                                #:size => { :in => 0..5.megabytes }
   validates_attachment_presence :image, message: "You must supply a scan image file"
-  #validate :validate_image_file_size
-  #validates_attachment_content_type :image, content_type: ["image/jpg",
-                                                           #"image/png", 
-                                                           #"application/pdf", 
-                                                           #"image/tiff", 
-                                                           #"image/jpeg" ], 
-                                            #message: "Only jpf, png, pdf, or tiff files are allowed"
-  #validates_attachment_size :image, less_than: 5.megabytes, message: "Files must be less than 5 megabytes"
 
   validates :scan_date, presence: true
   validate :scan_date_not_in_future
@@ -26,6 +15,15 @@ class Scan < ActiveRecord::Base
   validate :acceptable_file_size
 
   before_save :rename_image
+
+  def download_url(style_name=:pdf)
+    s3 = AWS::S3.new
+    @bucket ||= s3.buckets[image.bucket_name]
+    @bucket.objects[image.s3_object(style_name).key].url_for(:read,
+        :secure => true,
+        :expires => 1*3600,  # 1 hours
+        :response_content_disposition => "attachment; filename='#{image_file_name}'").to_s
+  end
 
 private
   def correct_content_type

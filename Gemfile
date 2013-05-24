@@ -36,5 +36,5 @@ gem "rmagick", "2.13.2", :group => [:development, :production]
 gem "faker", ">=1.1.2", :group => [:development, :test]
 gem "populate", ">=0.0.2", :group => [:development, :test]
 gem "debugger", :group => [:development, :test]
-gem "paperclip", "~> 3.0"
+gem "paperclip", ">=3.4.2"
 gem "aws-sdk"
