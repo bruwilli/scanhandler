@@ -7,8 +7,8 @@ class Users::InvitationsController < Devise::InvitationsController
     self.resource = User.invite!({ email: resource_params[:email] }, current_inviter) if not @role.nil?
 
     if resource.errors.empty? and 
-       not @role.nil? and
-       not self.resource.add_role(@role.name).nil?
+       !@role.nil? and
+       !self.resource.add_role(@role.name).nil?
       set_flash_message :notice, :send_instructions, :email => self.resource.email
       respond_with resource, :location => after_invite_path_for(resource)
     else

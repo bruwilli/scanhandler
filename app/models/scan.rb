@@ -36,7 +36,7 @@ private
 
   def acceptable_file_size
     file_size = self.image_file_size
-    if not file_size.nil? and not file_size < MAX_FILE_SIZE
+    if !file_size.nil? and file_size > MAX_FILE_SIZE
       errors.add(:image, "Maximum scan file size is " + number_to_human_size(MAX_FILE_SIZE) + 
                          ".  Yours was " + number_to_human_size(file_size))
     end
@@ -48,7 +48,7 @@ private
       num_scans = 0
       person = self.person
       scans = person.scans
-      num_scans = scans.count if not scans.nil?
+      num_scans = scans.count if !scans.nil?
       new_file_name = "#{person.first_name}_#{person.last_name}_scan#{(num_scans + 1).to_s}.pdf"
       new_file_name = sanitize_filename(new_file_name)
       self.image.instance_write :file_name, new_file_name

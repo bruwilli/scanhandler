@@ -10,14 +10,14 @@ class Person < ActiveRecord::Base
   after_save :handle_saved
 
   def self.search(first_name , last_name, is_fuzzy = false, include_nicknames = false)
-    if last_name.nil? and first_name.nil?
+    if last_name.nil? && first_name.nil?
       return includes(:scans).order(:last_name)
     end
 
     # handle fastest search with a special case
-    if not is_fuzzy and not include_nicknames
-      if not first_name.nil?
-        if not last_name.nil?
+    if !is_fuzzy && !include_nicknames
+      if !first_name.nil?
+        if !last_name.nil?
           first_name.downcase!
           last_name.downcase!
           return includes(:scans).where("lower(first_name) like lower(:first_name) and lower(last_name) like lower(:last_name)", 
@@ -38,7 +38,7 @@ class Person < ActiveRecord::Base
     people_by_first_name_fuzzy = []
     people_by_last_name = []
 
-    if not last_name.nil?
+    if !last_name.nil?
       last_name.downcase!
       people_by_last_name = includes(:scans).where("lower(last_name) like lower(:search)", {search: last_name + '%'} ).order("char_length(last_name)").to_a
       if is_fuzzy
@@ -46,14 +46,14 @@ class Person < ActiveRecord::Base
       end
     end
 
-    if not first_name.nil?
+    if !first_name.nil?
       first_name.downcase!
       people_by_first_name = includes(:scans).where("lower(first_name) like lower(:search)", {search: first_name + '%'} ).order("char_length(first_name)")
       if is_fuzzy
         people_by_first_name_fuzzy = get_fuzzy_first_name_matches(first_name)
       end
 
-      if include_nicknames
+      if include_nicknames && first_name.length > 2
         first_names = []
         name_groups = []
         nicknames = Nickname.search(first_name, is_fuzzy)
@@ -78,12 +78,12 @@ class Person < ActiveRecord::Base
     end
 
     result = nil
-    if not first_name.nil?
+    if !first_name.nil?
       result = people_by_first_name | 
           people_by_first_name_with_nicknames | 
           people_by_first_name_fuzzy | 
           people_by_first_name_with_nicknames_fuzzy
-      if not last_name.nil?
+      if !last_name.nil?
         result &= people_by_last_name
       end
     else

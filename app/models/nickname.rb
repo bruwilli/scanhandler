@@ -38,6 +38,7 @@ class Nickname < ActiveRecord::Base
              from nickname_trigrams
              where tg in (?)
              group by nickname_id
+             having count(nickname_id) > 1
              order by score desc
              limit ' + limit.to_s + ') as scored_nicknames
            on nicknames.id = scored_nicknames.nickname_id'
