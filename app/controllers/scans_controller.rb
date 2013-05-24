@@ -1,5 +1,3 @@
-require 'open-uri'
-
 class ScansController < ApplicationController
   before_filter :authenticate_user!
   respond_to :html, :json, :xml
@@ -29,12 +27,9 @@ class ScansController < ApplicationController
    redirect_to @scan.person
    end
 
-
    def download
    authorize! :download, Scan, :message => 'Not authorized to download scans.'
    @scan = Scan.find(params[:id])
-   data = open(@scan.image.url(:pdf))
-   send_data data.read, :type => data.content_type, :x_sendfile => true
-   #send_file @scan.image.path(:pdf), type: 'application/pdf', filename: @scan.image_file_name
+   send_file @scan.image.path(:pdf), type: 'application/pdf', filename: @scan.image_file_name
    end
 end

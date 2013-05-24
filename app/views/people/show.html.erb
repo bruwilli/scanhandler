@@ -36,7 +36,7 @@
             <td><%= scan.scan_date %></td>
             <td><%= scan.created_at.to_date %></td>
             <td><%= scan.user.name.nil? ? scan.user.email : scan.user.name %></td>
-            <td><%= link_to scan.download_url, 
+            <td><%= link_to Rails.env == 'production' ? scan.download_url : download_scan_path(scan), 
                             title: "Download scan PDF",
                             class: "btn" do %>
                   <i class="icon-download-alt"></i> pdf
