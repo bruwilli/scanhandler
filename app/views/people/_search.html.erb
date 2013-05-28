@@ -7,7 +7,7 @@
         <th>Last Name</th>
         <th>Date Added</th>
         <th>Added By</th>
-        <th>Scanned?</th>
+        <th>Cleared?</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -21,7 +21,7 @@
         <td style="text-align: center"><% if person.scans.count > 0 %><i class="icon-ok"></i><% end %></td>
         <td>
           <%= link_to person, 
-                      title: "View info and scans",
+                      title: "View info and live scan forms",
                       class: "btn" do %>
             <i class="icon-list"></i>
           <% end %>

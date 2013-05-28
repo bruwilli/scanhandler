@@ -21,7 +21,7 @@ class Scan < ActiveRecord::Base
     @bucket ||= s3.buckets[image.bucket_name]
     @bucket.objects[image.s3_object(style_name).key].url_for(:read,
         :secure => true,
-        :expires => 1*3600,  # 1 hours
+        :expires => 1200,  # 20 minutes
         :response_content_disposition => "attachment; filename='#{image_file_name}'").to_s
   end
 

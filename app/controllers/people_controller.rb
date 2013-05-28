@@ -18,7 +18,7 @@ class PeopleController < ApplicationController
 
   def new
     authorize! :create, Person, :message => 'Not authorized to create person information.'
-    @person = Person.new
+    @person = Person.new(first_name: params[:first_name], last_name: params[:last_name])
   end
 
   def create
