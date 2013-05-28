@@ -49,6 +49,8 @@ var do_search = function(first_name, last_name) {
             $('#person-search-results').addClass('hidden');
             $('#person_spinner').removeClass('hidden');
             }, 300);
+    } else {
+        delay(false, 0);
     }
 };
 
