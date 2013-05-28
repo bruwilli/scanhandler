@@ -1,4 +1,11 @@
-<h3>Users</h3>
+<h3>Users
+    <%= link_to new_user_invitation_path, 
+                            title: "Invite new user",
+                            class: "btn" do %>
+                  <i class="icon-plus"></i> Add New User
+                <% end %>
+</h3>
+
 <div class="span8">
 <table class="table table-condensed">
   <thead>
