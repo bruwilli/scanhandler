@@ -22,6 +22,8 @@ var do_search = function(first_name, last_name) {
 
         delay(false, 0);
         $('#person-search-results').html('')
+        $('#person_spinner').addClass('hidden');
+        $('#person-search-results').removeClass('hidden');
         return;
     }
 
@@ -35,12 +37,17 @@ var do_search = function(first_name, last_name) {
             last_search_xhr = $.get(url, form_data, function(html) { // perform an AJAX get
                 last_search_xhr = undefined;
                 $("#person-search-results").html(html); // replace the "results" div with the results
+                $('#person_spinner').addClass('hidden');
+                $('#person-search-results').removeClass('hidden');
             }).fail(function(html) {
                 last_search_data = '';
                 last_search_xhr = undefined;
                 $('#person-search-results').html(html)
+                $('#person_spinner').addClass('hidden');
+                $('#person-search-results').removeClass('hidden');
             });
-            $('#person-search-results').html($('#ajax_spinner').html());
+            $('#person-search-results').addClass('hidden');
+            $('#person_spinner').removeClass('hidden');
             }, 300);
     }
 };
