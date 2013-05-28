@@ -1,5 +1,6 @@
 <% if @people.count > 0 %>
   <div class="span8">
+  <h4>Lookup matches:</h4>
   <table class="table table-condensed table-hover">
     <thead>
       <tr>
@@ -40,4 +41,6 @@
     </tbody>
   </table>
   </div>
+<% else %>
+  <h4>No matches</h4>
 <% end %>
