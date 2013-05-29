@@ -7,7 +7,7 @@ en:
       no_invitations_remaining: "No invitations remaining"
       new:
         header: "Send new user invitation"
-        submit_button: "Invitation"
+        submit_button: "Invite"
       edit:
         header: "Complete registration"
         submit_button: "Complete registration"

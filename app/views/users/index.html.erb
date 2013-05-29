@@ -26,10 +26,25 @@
       <td><%= user.created_at.to_date %></td>
       <td><%= user.roles.first.nil? ? "Deactivated" : user.roles.first.name.titleize %></td>
       <td>
-        <a data-toggle="modal" href="#role-options-<%= user.id %>" class="btn btn-mini" type="button">Change role</a>
+        <%= link_to "\#role-options-#{user.id}", 
+                    :data => { :toggle => "modal" },
+                    :title => "Change role",
+                    :class => 'btn' do %>
+          <i class="icon-user"></i>
+        <% end %>
         <%= render user %>
       </td>
-      <td><%= link_to("Deactivate user", user_path(user), :data => { :confirm => "Are you sure you want to deactivate this user?" }, :method => :delete, :class => 'btn btn-mini') unless (user == current_user || user.roles.empty?) %></td>
+      <td>
+        <% if (user != current_user && ! user.roles.empty?) %>
+          <%= link_to user_path(user), 
+                      :data => { :confirm => "Are you sure you want to deactivate this user?" }, 
+                      :method => :delete, 
+                      :title => "Deactivate user",
+                      :class => 'btn btn-danger' do %>
+            <i class="icon-remove-circle icon-white"></i>
+          <% end %>
+        <% end %>
+      </td>
     </tr>
   <% end %>
   </tbody>
