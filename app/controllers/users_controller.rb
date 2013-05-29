@@ -25,10 +25,10 @@ class UsersController < ApplicationController
     authorize! :destroy, User, :message => 'Not authorized as an administrator.'
     user = User.find(params[:id])
     unless user == current_user
-      user.destroy
-      redirect_to users_path, :notice => "User deleted."
+      user.roles.delete(user.roles) if !user.roles.nil?
+      redirect_to users_path, :notice => "User deactivated."
     else
-      redirect_to users_path, :notice => "Can't delete yourself."
+      redirect_to users_path, :notice => "Can't deactivate yourself."
     end
   end
 end

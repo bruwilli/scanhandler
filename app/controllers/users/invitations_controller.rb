@@ -22,7 +22,7 @@ class Users::InvitationsController < Devise::InvitationsController
   end
 
   def destroy
-    authorize! :destroy, User, :message => 'Not authorized to invite new users'
+    authorize! :destroy, User, :message => 'Not authorized to destroy new users'
     super
   end
 end

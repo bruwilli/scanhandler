@@ -1,6 +1,7 @@
 Scanhandler::Application.routes.draw do
+  match "users/inactive" => "root#inactive"
   authenticated :user do
-    root :to => 'people#index'
+    root :to => 'root#index'
   end
   devise_scope :user do
   	root :to => "devise/sessions#new"
