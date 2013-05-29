@@ -1,6 +1,14 @@
 class Users::InvitationsController < Devise::InvitationsController
   before_filter :authenticate_user!
 
+  def after_invite_path_for(resource)
+    users_path
+  end
+
+  def after_accept_path_for(resource)
+    people_path
+  end
+
   def create
     authorize! :create, User, :message => 'Not authorized to invite new users'
     @role = Role.find(resource_params[:role_id])
@@ -22,7 +30,7 @@ class Users::InvitationsController < Devise::InvitationsController
   end
 
   def destroy
-    authorize! :destroy, User, :message => 'Not authorized to destroy new users'
+    authorize! :destroy, User, :message => 'Not authorized to destroy user invitations'
     super
   end
 end
