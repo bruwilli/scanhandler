@@ -52,6 +52,6 @@ class PeopleController < ApplicationController
     authorize! :destroy, Person, :message => 'Not authorized to delete person information.'
     person = Person.find(params[:id])
     person.destroy
-    redirect_to users_path, :notice => "Person deleted."
+    redirect_to people_path, :notice => "Person deleted."
   end
 end
