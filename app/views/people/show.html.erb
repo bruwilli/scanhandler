@@ -17,7 +17,7 @@
           multipart: true,
           html: {class: 'form-inline'} do |f| %>
         <%= f.input :scan_date, as: :string, label: "Date of scan" %>
-        <%= f.input :image, as: :file %>
+        <%= f.input :image, as: :file , label: "Image file (PDF, jpg, tif, or png.  PDF preferred.)" %> 
         <%= f.button :submit, class: 'btn btn-primary' %>
       <% end %>
     </div>

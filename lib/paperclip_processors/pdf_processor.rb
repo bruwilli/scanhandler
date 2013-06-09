@@ -19,9 +19,10 @@ module Paperclip
         #path = @current_format == "pdf" ? (@file.path + "[0]") : @file.path
         if @current_format != "pdf"
           images = Magick::Image.read(@file.path)
-          image = images.first.resize_to_fit(1650)
+          image = images.first.resize_to_fit(792)
           image.compression = JPEGCompression
           image.format = 'PDF'
+          image.density = "72x72"
           @current_format = "pdf"
           tmp = Tempfile.new([@basename, @current_format].compact.join("."))
           image.write( tmp.path) { self.quality = 50 }
