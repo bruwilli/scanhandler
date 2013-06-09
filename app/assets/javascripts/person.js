@@ -73,14 +73,15 @@ $(document).ready(function() {
     $('#first_name, #last_name').bind("keyup", function() {
         var first_name_field = $("#first_name");
         var last_name_field = $("#last_name");
-        $(this).val($.trim($(this).val()));
-        if (first_name_field.val().length == 0 || 
-            last_name_field.val().length == 0) {
+        var first_name = $.trim(first_name_field.val());
+        var last_name = $.trim(last_name_field.val());
+        if (first_name.length == 0 || 
+            last_name.length == 0) {
             disable_add_new_person();
         } else {
             enable_add_new_person();
         }
-        do_search(first_name_field.val(), last_name_field.val());
+        do_search(first_name, last_name);
     }); 
     disable_add_new_person();
 });
