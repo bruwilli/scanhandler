@@ -112,7 +112,7 @@ class Person < ActiveRecord::Base
   private
   def self.get_fuzzy_first_name_matches(first_name)
     first_name = " #{first_name} "
-    limit = 4
+    limit = 20
     trigram_list = (0..first_name.length-3).collect { |idx| first_name[idx,3] }
     sql = 'select *
            from people
@@ -121,7 +121,7 @@ class Person < ActiveRecord::Base
              from people_first_name_trigrams
              where tg in (?)
              group by person_id
-             having count(person_id) > 1
+             having count(person_id) > 2
              order by score desc
              limit ' + limit.to_s + ') as scored_person_first_names
            on people.id = scored_person_first_names.person_id'
@@ -132,7 +132,7 @@ class Person < ActiveRecord::Base
 
   def self.get_fuzzy_last_name_matches(last_name)
     last_name = " #{last_name} "
-    limit = 4
+    limit = 20
     trigram_list = (0..last_name.length-3).collect { |idx| last_name[idx,3] }
     sql = 'select *
            from people
@@ -141,7 +141,7 @@ class Person < ActiveRecord::Base
              from people_last_name_trigrams
              where tg in (?)
              group by person_id
-             having count(person_id) > 1
+             having count(person_id) > 2
              order by score desc
              limit ' + limit.to_s + ') as scored_person_last_names
            on people.id = scored_person_last_names.person_id'
