@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130422162533) do
+ActiveRecord::Schema.define(:version => 20130726002000) do
 
   create_table "name_groups", :force => true do |t|
     t.string "names"
@@ -87,7 +87,7 @@ ActiveRecord::Schema.define(:version => 20130422162533) do
   add_index "scans", ["user_id"], :name => "index_scans_on_user_id"
 
   create_table "users", :force => true do |t|
-    t.string   "email",                                :default => "", :null => false
+    t.string   "email",                                :default => "",   :null => false
     t.string   "encrypted_password",                   :default => ""
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -97,8 +97,8 @@ ActiveRecord::Schema.define(:version => 20130422162533) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                                           :null => false
-    t.datetime "updated_at",                                           :null => false
+    t.datetime "created_at",                                             :null => false
+    t.datetime "updated_at",                                             :null => false
     t.string   "name"
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
@@ -110,6 +110,7 @@ ActiveRecord::Schema.define(:version => 20130422162533) do
     t.integer  "invitation_limit"
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
+    t.boolean  "send_notification",                    :default => true
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

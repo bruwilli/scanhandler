@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Live Scan added for <%= "#{@person.first_name} #{@person.last_name}" %></h1>
+    <p>
+      A new live scan was just added for <%= link_to "#{@person.first_name} #{@person.last_name}", person_url(@person) %>
+    </p>
+    <h3>Scan information</h3>
+    <dl class="dl-horizontal">
+      <dt style="font-weight:bold;">Scan Date</dt>
+      <dd><%= @scan.scan_date %></dd>
+      <dt style="font-weight:bold;">Added By</dt>
+      <dd><%= @user.name %></dd>
+      <dt style="font-weight:bold;">Date Added</dt>
+      <dd><%= @scan.created_at.to_date %></dd>
+    </dl>
+  </body>
+</html>

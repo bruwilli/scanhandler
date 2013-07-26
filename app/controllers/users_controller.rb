@@ -12,6 +12,7 @@ class UsersController < ApplicationController
   end
   
   def update
+    params[:user][:send_notification] = (params[:user][:send_notification] == '1')
     @user = User.find(params[:id])
     authorize! :update, @user, :message => 'Not authorized to edit users.'
     if @user.update_attributes(params[:user], :as => :admin)

@@ -6,6 +6,7 @@
     </div>
     <div class="modal-body">
     <%= f.input :role_ids, :collection => Role.all, :as => :radio_buttons, :label_method => lambda {|t| "#{t.name.titleize}".html_safe}, :label => "Role", checked: user.role_ids.first %>
+    <%= f.input :send_notification, :label => "Send email notification when scan added" %>
     </div>
     <div class="modal-footer">
       <%= f.submit "Update", :class => "btn btn-primary" %>

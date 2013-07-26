@@ -9,6 +9,7 @@ class ScansController < ApplicationController
 
     @scan.user_id = current_user.id if @scan
     if @scan.save
+      UserMailer.send_scan_notification_email(@person, current_user, @scan).deliver
       flash[:notice] = 'Scan was successfully saved'
       redirect_to(@person)
     else

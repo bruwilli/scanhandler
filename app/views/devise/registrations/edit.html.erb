@@ -4,6 +4,7 @@
   <%= display_base_errors resource %>
   <%= f.input :name, :autofocus => true %>
   <%= f.input :email, :required => true %>
+  <%= f.input :send_notification, :label => "Receive scan notifications", :hint => "Check if you want to receive notifications when new Live Scans have been added" %>
   <%= f.input :password, :autocomplete => "off", :hint => "leave it blank if you don't want to change it", :required => false %>
   <%= f.input :password_confirmation, :required => false %>
   <%= f.input :current_password, :hint => "we need your current password to confirm your changes", :required => true %>

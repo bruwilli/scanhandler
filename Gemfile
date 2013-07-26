@@ -15,7 +15,7 @@ gem "capybara", ">= 2.0.2", :group => :test
 gem "database_cleaner", ">= 0.9.1", :group => :test
 gem "email_spec", ">= 1.4.0", :group => :test
 gem "factory_girl_rails", ">= 4.2.0", :group => [:development, :test]
-gem "bootstrap-sass", ">= 2.3.0.0"
+gem "bootstrap-sass", ">= 2.3.2.1"
 gem "devise", ">= 2.2.3"
 gem "devise_invitable", ">= 1.1.5"
 gem "cancan", ">= 1.6.8"
