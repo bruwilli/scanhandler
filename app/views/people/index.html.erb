@@ -3,7 +3,8 @@
 
 <p>
   Download all:
-  <%= link_to "CSV", people_path(format: "csv") %>
+  <%= link_to "CSV", people_path(format: "csv") %> |
+  <%= link_to "Excel", people_path(format: "xls") %>
 </p>
 
 <%= form_tag(people_search_path, method: :get, id: "person-search-form", class: "form-inline" ) do %>

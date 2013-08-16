@@ -156,7 +156,7 @@ class Person < ActiveRecord::Base
   def self.to_csv
     CSV.generate do |csv|
         csv <<  ["First Name", "Last Name", "Date Added", "Added By", "Date of Last Scan"]
-        order(:last_name).each do |person|
+        all.each do |person|
         scans = person.scans
         csv << [person.first_name,
                       person.last_name,

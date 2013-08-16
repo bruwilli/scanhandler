@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">First Name</Data></Cell>
+        <Cell><Data ss:Type="String">Last Name</Data></Cell>
+        <Cell><Data ss:Type="String">Date Added</Data></Cell>
+        <Cell><Data ss:Type="String">Added By</Data></Cell>
+        <Cell><Data ss:Type="String">Last Scan Date</Data></Cell>
+      </Row>
+    <% @people.each do |person| %>
+      <Row>
+        <Cell><Data ss:Type="String"><%= person.first_name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= person.last_name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= person.created_at.to_date %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= person.user.name.nil? ? person.user.email : person.user.name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= person.scans.count > 0 ? person.scans.first.scan_date.to_date : "NO SCAN!" %></Data></Cell>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

@@ -6,7 +6,11 @@ class PeopleController < ApplicationController
     respond_to do |format|
       format.html
       format.csv do
-        render text: Person.to_csv
+        @people = Person.order(:last_name)
+        render text: @people.to_csv
+      end
+      format.xls do
+        @people = Person.order(:last_name)
       end
     end
   end
