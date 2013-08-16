@@ -20,7 +20,6 @@ ActiveRecord::Schema.define(:version => 20130726041039) do
   create_table "nickname_trigrams", :force => true do |t|
     t.string  "tg"
     t.integer "nickname_id"
-    t.integer "score",       :default => 1
   end
 
   add_index "nickname_trigrams", ["nickname_id"], :name => "index_nickname_trigrams_on_nickname_id"
@@ -43,18 +42,16 @@ ActiveRecord::Schema.define(:version => 20130726041039) do
   add_index "people", ["user_id"], :name => "index_people_on_user_id"
 
   create_table "people_first_name_trigrams", :force => true do |t|
-    t.integer "person_id",                :null => false
-    t.string  "tg",                       :null => false
-    t.integer "score",     :default => 1, :null => false
+    t.integer "person_id", :null => false
+    t.string  "tg",        :null => false
   end
 
   add_index "people_first_name_trigrams", ["person_id"], :name => "index_people_first_name_trigrams_on_person_id"
   add_index "people_first_name_trigrams", ["tg"], :name => "index_people_first_name_trigrams_on_tg"
 
   create_table "people_last_name_trigrams", :force => true do |t|
-    t.integer "person_id",                :null => false
-    t.string  "tg",                       :null => false
-    t.integer "score",     :default => 1, :null => false
+    t.integer "person_id", :null => false
+    t.string  "tg",        :null => false
   end
 
   add_index "people_last_name_trigrams", ["person_id"], :name => "index_people_last_name_trigrams_on_person_id"

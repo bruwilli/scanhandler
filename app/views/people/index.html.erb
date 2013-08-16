@@ -1,5 +1,10 @@
 <h3>Person Lookup</h3>
-<% person = Person.new %> 
+<% person = Person.new %>
+
+<p>
+  Download all:
+  <%= link_to "CSV", people_path(format: "csv") %>
+</p>
 
 <%= form_tag(people_search_path, method: :get, id: "person-search-form", class: "form-inline" ) do %>
     <%= text_field_tag :first_name, nil, autocomplete: "off", class: "input-medium", placeholder: "First Name" %>

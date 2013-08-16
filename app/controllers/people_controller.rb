@@ -3,13 +3,19 @@ class PeopleController < ApplicationController
 
   def index
     authorize! :read, Person, :message => 'Not authorized to view person information.'
+    respond_to do |format|
+      format.html
+      format.csv do
+        render text: Person.to_csv
+      end
+    end
   end
 
   def search
     authorize! :read, Person, :message => 'Not authorized to view person information.'
     first_name = params[:first_name].strip
     last_name = params[:last_name].strip
-    @people = Person.search(first_name.empty? ? nil : first_name, 
+    @people = Person.search(first_name.empty? ? nil : first_name,
                             last_name.empty? ? nil : last_name,
                             true,
                             true)
@@ -37,7 +43,7 @@ class PeopleController < ApplicationController
    @person = Person.includes(:scans).find(params[:id])
    @scan = Scan.new
   end
-  
+
   def update
     authorize! :update, Person, :message => 'Not authorized to modify person information.'
     @person = Person.find(params[:id])
@@ -47,7 +53,7 @@ class PeopleController < ApplicationController
       redirect_to people_path, :alert => "Unable to update person information."
     end
   end
-    
+
   def destroy
     authorize! :destroy, Person, :message => 'Not authorized to delete person information.'
     person = Person.find(params[:id])
