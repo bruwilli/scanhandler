@@ -46,15 +46,28 @@ class PeopleController < ApplicationController
    authorize! :read, Person, :message => 'Not authorized to view person information.'
    @person = Person.includes(:scans).find(params[:id])
    @scan = Scan.new
-  end
+   @first_name = @person.first_name
+   @last_name = @person.last_name
+ end
 
   def update
     authorize! :update, Person, :message => 'Not authorized to modify person information.'
-    @person = Person.find(params[:id])
-    if @person.update_attributes(params[:person], :as => :vip)
-      redirect_to people_path, :notice => "Update successful"
+    @person = Person.includes(:scans).find(params[:id])
+    if @person.nil?
+      redirect_to people_path, :alert => "Person does not exist"
     else
-      redirect_to people_path, :alert => "Unable to update person information."
+      @scan = Scan.new
+      @first_name = @person.first_name
+      @last_name = @person.last_name
+      if !@person.update_attributes(first_name: params[:person][:first_name], last_name: params[:person][:last_name])
+        flash.now[:alert] = 'Error updating person.  See errors below.'
+        render 'show'
+      else
+        @first_name = @person.first_name
+        @last_name = @person.last_name
+        flash.now[:notice] = 'Person successfully updated'
+        render 'show'
+      end
     end
   end
 

@@ -13,8 +13,10 @@ class ScansController < ApplicationController
       flash[:notice] = 'Scan was successfully saved'
       redirect_to(@person)
     else
-      flash[:alert] = 'Error saving scan image.  See errors below.'
+      flash.now[:alert] = 'Error saving scan image.  See errors below.'
       @person.scans.delete_at(-1)
+      @first_name = @person.first_name
+      @last_name = @person.last_name
       render 'people/show'
     end
   end

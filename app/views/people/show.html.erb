@@ -1,4 +1,26 @@
-<h3><%= "#{@person.first_name} #{@person.last_name}" %></h3>
+<h2 class="one_line"><%= "#{@first_name} #{@last_name}" %>
+  <% if can? :edit, Person %>
+       <button type="button" class="btn one_line" data-toggle="collapse" data-target="#edit_person_collapsible, #edit_blah" title="Edit name">
+          <i class="icon-pencil"></i>
+        </button>
+  <% end %>
+<h2>
+<% if can? :edit, Person %>
+   <%= @person.errors.count > 0 ?
+            '<div id="edit_person_collapsible" class="collapse in">'.html_safe:
+            '<div id="edit_person_collapsible" class="collapse">'.html_safe %>
+      <%= simple_form_for @person,
+          url: person_path(@person),
+          method: 'put',
+          multipart: true,
+          html: {class: 'form-inline'} do |f| %>
+        <%= f.input :first_name %>
+        <%= f.input :last_name %>
+        <%= f.button :submit, class: 'btn btn-primary' %>
+      <% end %>
+    </div>
+<% end %>
+
 <h4><%= "Added on #{@person.created_at.to_date} by #{@person.user.name.nil? ? @person.user.email : @person.user.name}" %></h4>
   <legend>Scans
     <% if can? :create, Scan %>
@@ -8,8 +30,8 @@
     <% end %>
   </legend>
   <% if can? :create, Scan %>
-    <%= @scan.errors.count > 0 ? 
-            '<div id="add_scan_collapsible" class="collapse in">'.html_safe: 
+    <%= @scan.errors.count > 0 ?
+            '<div id="add_scan_collapsible" class="collapse in">'.html_safe:
             '<div id="add_scan_collapsible" class="collapse">'.html_safe %>
       <%= simple_form_for @scan,
           url: person_scans_path(@person),
@@ -17,7 +39,7 @@
           multipart: true,
           html: {class: 'form-inline'} do |f| %>
         <%= f.input :scan_date, as: :string, label: "Date of scan" %>
-        <%= f.input :image, as: :file , label: "Image file (PDF, jpg, tif, or png.  PDF preferred.)" %> 
+        <%= f.input :image, as: :file , label: "Image file (PDF, jpg, tif, or png.  PDF preferred.)" %>
         <%= f.button :submit, class: 'btn btn-primary' %>
       <% end %>
     </div>
@@ -36,14 +58,14 @@
             <td><%= scan.scan_date %></td>
             <td><%= scan.created_at.to_date %></td>
             <td><%= scan.user.name.nil? ? scan.user.email : scan.user.name %></td>
-            <td><%= link_to Rails.env == 'production' ? scan.download_url : download_scan_path(scan), 
+            <td><%= link_to Rails.env == 'production' ? scan.download_url : download_scan_path(scan),
                             title: "Download scan PDF",
                             class: "btn" do %>
                   <i class="icon-download-alt"></i> pdf
                 <% end %>
                 <% if can? :destroy, Scan %>
                   <%= link_to destroy_scan_path(scan),
-                              confirm: 'Are you sure you want to delete this scan?', 
+                              confirm: 'Are you sure you want to delete this scan?',
                               method: :delete,
                               title: "Delete this scan",
                               class: "btn btn-danger" do %>
