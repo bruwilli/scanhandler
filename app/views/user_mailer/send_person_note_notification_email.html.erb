@@ -9,6 +9,6 @@
       A note was just added for <%= link_to "#{@person.first_name} #{@person.last_name}", person_url(@person) %> by <%= @user.name %>
     </p>
     <h3>Note</h3>
-    <p><%= @person_note.text %>
+    <p><%= @person_note.text.html_safe %>
   </body>
 </html>
