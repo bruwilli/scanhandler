@@ -9,6 +9,7 @@ class Ability
       can [:read, :update, :create], Person
       can [:index, :show, :update], User, id: user.id
       can [:create, :download], Scan
+      can [:create], PersonNote
     elsif user.has_role? :viewer
       can :read, Person
       can [:index, :show, :update], User, id: user.id

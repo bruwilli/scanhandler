@@ -4,7 +4,7 @@ class ScansController < ApplicationController
 
   def create
     authorize! :create, Scan, :message => 'Not authorized to create scans.'
-    @person = Person.find(params[:person_id])
+    @person = Person.includes(:scans).includes(:person_notes).find(params[:person_id])
     @scan = @person.scans.build(params[:scan])
 
     @scan.user_id = current_user.id if @scan
@@ -17,6 +17,7 @@ class ScansController < ApplicationController
       @person.scans.delete_at(-1)
       @first_name = @person.first_name
       @last_name = @person.last_name
+      @person_note = PersonNote.new
       render 'people/show'
     end
   end

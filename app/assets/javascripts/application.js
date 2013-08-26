@@ -16,4 +16,5 @@
 //= require_tree ./sitewide
 //= require jquery.ui.tooltip
 //= require jquery.ui.datepicker
+//= require tinymce
 //= require person

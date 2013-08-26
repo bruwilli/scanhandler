@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130726041039) do
+ActiveRecord::Schema.define(:version => 20130825204738) do
 
   create_table "name_groups", :force => true do |t|
     t.string "names"
@@ -56,6 +56,17 @@ ActiveRecord::Schema.define(:version => 20130726041039) do
 
   add_index "people_last_name_trigrams", ["person_id"], :name => "index_people_last_name_trigrams_on_person_id"
   add_index "people_last_name_trigrams", ["tg"], :name => "index_people_last_name_trigrams_on_tg"
+
+  create_table "person_notes", :force => true do |t|
+    t.text     "text"
+    t.integer  "user_id"
+    t.integer  "person_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "person_notes", ["person_id"], :name => "index_person_notes_on_person_id"
+  add_index "person_notes", ["user_id"], :name => "index_person_notes_on_user_id"
 
   create_table "roles", :force => true do |t|
     t.string   "name"

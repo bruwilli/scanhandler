@@ -31,3 +31,4 @@ gem "populate", ">=0.0.2", :group => [:development, :test]
 gem "debugger", :group => [:development, :test]
 gem "paperclip", ">=3.4.2"
 gem "aws-sdk"
+gem 'tinymce-rails'

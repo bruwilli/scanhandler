@@ -15,4 +15,5 @@ class User < ActiveRecord::Base
 
   has_many :people
   has_many :scans
+  has_many :person_notes
  end

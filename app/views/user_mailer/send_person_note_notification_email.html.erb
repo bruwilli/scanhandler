@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Note added for <%= "#{@person.first_name} #{@person.last_name}" %></h1>
+    <p>
+      A note was just added for <%= link_to "#{@person.first_name} #{@person.last_name}", person_url(@person) %> by <%= @user.name %>
+    </p>
+    <h3>Note</h3>
+    <p><%= @person_note.text %>
+  </body>
+</html>

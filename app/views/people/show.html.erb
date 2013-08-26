@@ -78,3 +78,38 @@
     </tbody>
   </table>
 <% end %>
+  <legend>Notes
+    <% if can? :create, PersonNote %>
+      <button type="button" class="btn" data-toggle="collapse" data-target="#add_note_collapsible">
+        <i class="icon-plus"></i> add
+      </button>
+    <% end %>
+  </legend>
+<% if can? :create, PersonNote %>
+    <%= @person_note.errors.count > 0 ?
+            '<div id="add_note_collapsible" class="collapse in">'.html_safe:
+            '<div id="add_note_collapsible" class="collapse">'.html_safe %>
+      <%= simple_form_for @person_note,
+          url: person_person_notes_path(@person),
+          method: 'post',
+          multipart: true,
+          html: {class: 'form-inline'} do |f| %>
+        <%= f.input :text, as: :text, input_html: {rows: 10, class: "span12 tinymce" }, label: "Note:" %>
+        <%= f.button :submit, class: 'btn btn-primary' %>
+      <% end %>
+    </div>
+    <%= tinymce %>
+  <% end %>
+  <% if !@person.person_notes.nil? && @person.person_notes.count > 0 %>
+    <% @person.person_notes.each do |person_note| %>
+       <div class="container-fluid">
+       <div class="row-fluid">
+          <span class="label"><%= person_note.created_at %></span> by <span class="label"><%= person_note.user.name.nil? ? person_note.user.email : person_note.user.name %></span>
+        </div>
+        <div class="row-fluid">
+          <div class="well well-small"><%= person_note.text.html_safe %></div>
+        </div>
+      </div>
+  <% end %>
+<% end %>
+
