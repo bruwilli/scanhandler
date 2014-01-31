@@ -1,6 +1,6 @@
-<h2 class="one_line"><%= "#{@first_name} #{@last_name}" %>
+<h2 class="one_line"><%= "#{@first_name} #{@last_name} (#{@person.cal_south_id || '?'})"%>
   <% if can? :edit, Person %>
-       <button type="button" class="btn one_line" data-toggle="collapse" data-target="#edit_person_collapsible, #edit_blah" title="Edit name">
+       <button type="button" class="btn one_line" data-toggle="collapse" data-target="#edit_person_collapsible, #edit_blah" title="Edit">
           <i class="icon-pencil"></i>
         </button>
   <% end %>
@@ -16,12 +16,13 @@
           html: {class: 'form-inline'} do |f| %>
         <%= f.input :first_name %>
         <%= f.input :last_name %>
+        <%= f.input :cal_south_id , label: "Cal South Id" %>
         <%= f.button :submit, class: 'btn btn-primary' %>
       <% end %>
     </div>
 <% end %>
 
-<h4><%= "Added on #{@person.created_at.to_date} by #{@person.user.name.nil? ? @person.user.email : @person.user.name}" %></h4>
+<h4><%= "Added on #{@person.created_at.to_date} by #{@person.user.name || @person.user.email}" %></h4>
   <legend>Scans
     <% if can? :create, Scan %>
       <button type="button" class="btn" data-toggle="collapse" data-target="#add_scan_collapsible">

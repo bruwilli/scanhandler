@@ -9,6 +9,7 @@
       <Row>
         <Cell><Data ss:Type="String">First Name</Data></Cell>
         <Cell><Data ss:Type="String">Last Name</Data></Cell>
+        <Cell><Data ss:Type="String">Cal South Id</Data></Cell>
         <Cell><Data ss:Type="String">Date Added</Data></Cell>
         <Cell><Data ss:Type="String">Added By</Data></Cell>
         <Cell><Data ss:Type="String">Last Scan Date</Data></Cell>
@@ -17,8 +18,10 @@
       <Row>
         <Cell><Data ss:Type="String"><%= person.first_name %></Data></Cell>
         <Cell><Data ss:Type="String"><%= person.last_name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= person.cal_south_id || "" %></Data></Cell>
+
         <Cell><Data ss:Type="String"><%= person.created_at.to_date %></Data></Cell>
-        <Cell><Data ss:Type="String"><%= person.user.name.nil? ? person.user.email : person.user.name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= person.user.name || person.user.email %></Data></Cell>
         <Cell><Data ss:Type="String"><%= person.scans.count > 0 ? person.scans.first.scan_date.to_date : "NO SCAN!" %></Data></Cell>
       </Row>
     <% end %>

@@ -28,7 +28,9 @@ class PeopleController < ApplicationController
 
   def new
     authorize! :create, Person, :message => 'Not authorized to create person information.'
-    @person = Person.new(first_name: params[:first_name].strip, last_name: params[:last_name].strip)
+    @person = Person.new(first_name: params[:first_name].strip, 
+                         last_name: params[:last_name].strip,
+                         cal_south_id: params[:cal_south_id].try(:strip))
   end
 
   def create
@@ -61,7 +63,9 @@ class PeopleController < ApplicationController
       @first_name = @person.first_name
       @last_name = @person.last_name
       @person_note = PersonNote.new
-      if !@person.update_attributes(first_name: params[:person][:first_name], last_name: params[:person][:last_name])
+      if !@person.update_attributes(first_name: params[:person][:first_name].strip,
+                                    last_name: params[:person][:last_name].strip,
+                                    cal_south_id: params[:person][:cal_south_id].strip)
         flash.now[:alert] = 'Error updating person.  See errors below.'
         render 'show'
       else

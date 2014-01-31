@@ -7,9 +7,10 @@ class Person < ActiveRecord::Base
   has_many :scans, order: 'scan_date DESC', dependent: :destroy
   has_many :person_notes, order: 'created_at DESC', dependent: :destroy
   belongs_to :user # user that created this person
-  attr_accessible :first_name, :last_name
+  attr_accessible :first_name, :last_name, :cal_south_id
   validates :first_name, presence: true, length: { maximum: 64 }
   validates :last_name, presence: true, length: { maximum: 64 }
+  validates :cal_south_id, uniqueness: true
 
   after_save :handle_saved
 
@@ -156,13 +157,14 @@ class Person < ActiveRecord::Base
 
   def self.to_csv
     CSV.generate do |csv|
-        csv <<  ["First Name", "Last Name", "Date Added", "Added By", "Date of Last Scan"]
+        csv <<  ["First Name", "Last Name", "Cal South Id", "Date Added", "Added By", "Date of Last Scan"]
         all.each do |person|
         scans = person.scans
         csv << [person.first_name,
                       person.last_name,
+                      person.cal_south_id || "",
                       person.created_at.to_date,
-                      person.user.name.nil? ? person.user.email : person.user.name,
+                      person.user.name || person.user.email,
                       scans.count > 0 ? scans.first.scan_date.to_date : 'NO SCAN!']
       end
     end

@@ -5,6 +5,7 @@
       <tr>
         <th>First Name</th>
         <th>Last Name</th>
+        <th>Cal South Id</th>
         <th>Scan Date</th>
         <th>Actions</th>
       </tr>
@@ -14,6 +15,7 @@
       <tr>
         <td><%= person.first_name %></td>
         <td><%= person.last_name %></td>
+        <td><%= person.cal_south_id || "" %></td>
         <td><%= person.scans.count > 0 ? ('<span class="label label-success">' + person.scans.first.scan_date.to_date.to_s + '</span>').html_safe : '<span class="label label-important">NO SCAN!</span>'.html_safe %></td>
         <td>
           <%= link_to person, 

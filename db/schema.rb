@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130825204738) do
+ActiveRecord::Schema.define(:version => 20140131134304) do
 
   create_table "name_groups", :force => true do |t|
     t.string "names"
@@ -35,8 +35,9 @@ ActiveRecord::Schema.define(:version => 20130825204738) do
     t.string   "first_name"
     t.string   "last_name"
     t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.string   "cal_south_id"
   end
 
   add_index "people", ["user_id"], :name => "index_people_on_user_id"
