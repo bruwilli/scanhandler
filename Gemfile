@@ -27,9 +27,10 @@ gem "figaro", ">= 0.5.3"
 gem "better_errors", ">= 0.6.0", :group => :development
 gem "binding_of_caller", ">= 0.7.1", :group => :development, :platforms => [:mri_19, :rbx]
 gem "rmagick", "2.13.2", :group => [:development, :production]
-gem "faker", ">=1.1.2"
+gem "faker", "1.1.2"
+gem "ffaker", "1.15.0"
 gem "populate", ">=0.0.2", :group => [:development, :test]
 gem "debugger", :group => [:development, :test]
-gem "paperclip", ">=3.4.2"
+gem "paperclip", "3.4.2"
 gem "aws-sdk"
 gem 'tinymce-rails'
