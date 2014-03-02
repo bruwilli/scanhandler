@@ -4,7 +4,7 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Live Scan added for <%= "#{@person.first_name} #{@person.last_name}" %></h1>
+    <h1>Live Scan added for <%= "#{@person.first_name} #{@person.last_name}    (Cal South ID: #{@person.cal_south_id  || 'Unknown'})" %></h1>
     <p>
       A new live scan was just added for <%= link_to "#{@person.first_name} #{@person.last_name}", person_url(@person) %>
     </p>
