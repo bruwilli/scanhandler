@@ -1,4 +1,4 @@
-<h2 class="one_line"><%= "#{@first_name} #{@last_name} (#{@person.cal_south_id || '?'})"%>
+<h2 class="one_line"><%= "#{@first_name} #{@last_name}" %> <small>(Cal South ID: <%= @person.cal_south_id || 'Unknown'%>)</small>
   <% if can? :edit, Person %>
        <button type="button" class="btn one_line" data-toggle="collapse" data-target="#edit_person_collapsible, #edit_blah" title="Edit">
           <i class="icon-pencil"></i>

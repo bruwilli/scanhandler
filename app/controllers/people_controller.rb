@@ -36,6 +36,7 @@ class PeopleController < ApplicationController
   def create
     authorize! :create, Person, :message => 'Not authorized to create person information.'
     @person = Person.new(params[:person])
+    @person.cal_south_id = nil if @person.cal_south_id.strip.blank?
     @person.user_id = current_user.id
     if @person.save
       redirect_to @person

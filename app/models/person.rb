@@ -10,7 +10,7 @@ class Person < ActiveRecord::Base
   attr_accessible :first_name, :last_name, :cal_south_id
   validates :first_name, presence: true, length: { maximum: 64 }
   validates :last_name, presence: true, length: { maximum: 64 }
-  validates :cal_south_id, uniqueness: true
+  validates :cal_south_id, uniqueness: true, allow_blank: true
 
   after_save :handle_saved
 
